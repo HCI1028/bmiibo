@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bmiibo"
+version = "1.0.0"
+authors = [
+  { name="Huang Zi-ji", email="your_email@example.com" },
+]
+description = "一個開源的跨平台虛擬玩具（Virtual Toy）系統，支援安全掃描與每日防刷限制。"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.optional-dependencies]
+pygame = ["pygame>=2.0.0"] # 告訴他人如果想用 to_pygame_surface()，可以選配安裝 pygame

@@ -2,10 +2,12 @@ name: 🚀 發布 Python 套件至 PyPI
 
 on:
   release:
-    types: [published] # 當你在 GitHub 建立並發布一個新的 Release 時觸發
+    types: [published]
 
+# 🎯 關鍵修正：確保全域擁有讀取內容與寫入身份憑證的權限
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   deploy:
@@ -13,9 +15,7 @@ jobs:
     environment:
       name: pypi
       url: https://pypi.org/p/bmiibo
-    permissions:
-      id-token: write # 🎯 關鍵：這是 Trusted Publishers 用來進行安全驗證的權限
-
+    
     steps:
     - uses: actions/checkout@v4
 
@@ -30,12 +30,10 @@ jobs:
         pip install build
 
     - name: 構建套件 (Build)
-      run: |
-        # 🎯 進入你的 python 資料夾再進行打包
-        cd python
-        python -m build
+      run: python -m build
+      working-directory: python
 
     - name: 發布至 PyPI (Publish)
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
-        packages-dir: python/dist/ # 指定剛才打包好的檔案路徑
+        packages-dir: python/dist/

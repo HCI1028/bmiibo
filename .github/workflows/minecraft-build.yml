@@ -1,0 +1,39 @@
+name: ⛏️ 編譯 Minecraft 26.1 Fabric 模組
+
+on:
+  push:
+    paths:
+      - 'minecraft/**' # 當有修改 minecraft 資料夾內的代碼時觸發
+  workflow_dispatch: # 支援手動點擊按鈕觸發
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: 設定 Java 21 環境
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+
+    # 🎯 核心關鍵：線上自動補齊 Gradle 軌道，不需要本機動手
+    - name: 初始化 Gradle Wrapper
+      run: |
+        cd minecraft
+        gradle wrapper --gradle-version 8.7
+
+    - name: 給予執行權限
+      run: chmod +x minecraft/gradlew
+
+    - name: 開始編譯模組 (Build)
+      run: |
+        cd minecraft
+        ./gradlew build
+
+    - name: 📦 將編譯好的 .jar 模組封存提供下載
+      uses: actions/upload-artifact@v4
+      with:
+        name: bmiibo-minecraft-26.1-mod
+        path: minecraft/build/libs/*.jar

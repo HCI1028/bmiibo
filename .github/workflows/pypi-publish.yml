@@ -4,14 +4,13 @@ on:
   release:
     types: [published]
 
-# 🎯 關鍵修正：確保全域擁有讀取內容與寫入身份憑證的權限
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   deploy:
+    # 🎯 關鍵防線：如果這次發布的 Tag 包含 'mc-'，就直接跳過這個 Job 不執行！
+    if: "!contains(github.event.release.tag_name, 'mc-')"
     runs-on: ubuntu-latest
+    # 底下保持不變...
+   
     environment:
       name: pypi
       url: https://pypi.org/p/bmiibo

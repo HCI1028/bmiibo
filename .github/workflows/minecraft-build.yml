@@ -12,11 +12,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: 設定 Java 21 環境
+    - name: 設定 Java 25 環境
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '21'
+        java-version: '25'
 
     # 🎯 核心關鍵：線上自動補齊 Gradle 軌道，不需要本機動手
     - name: 初始化 Gradle Wrapper

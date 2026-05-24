@@ -1,13 +1,13 @@
 name: ⛏️ 編譯 Minecraft 26.1 Fabric 模組
 
 on:
-  push:
-    paths:
-      - 'minecraft/**' # 當有修改 minecraft 資料夾內的代碼時觸發
-  workflow_dispatch: # 支援手動點擊按鈕觸發
+  release:
+    types: [published]
+  workflow_dispatch: # 保留手動點擊按鈕觸發
 
 jobs:
   build:
+    # 底下保持不變...
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
